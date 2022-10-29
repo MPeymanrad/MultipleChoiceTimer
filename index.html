@@ -10,14 +10,70 @@
   </head>
   <body dir="rtl">
     <div class="wrapper">
-      <div class="main_buttons p-3 d-flex justify-content-center align-items-center flex-wrap w-100">
-        <button class="main_button p-4  m-3 m-lg-1 d-flex justify-content-between align-items-center">
-            شروع
-            <img src="res/icons/rocket.svg" alt="">
+      <div class="overlay"></div>
+      <div class="start_modal">
+        <span class="close_span">&times;</span>
+        <form class="d-flex flex-column flex-lg-row p-2">
+          <label class="d-flex flex-column">
+            نام درس:
+            <input
+              type="text"
+              placeholder="نام درس را وارد کنيد"
+              id="name_input"
+            />
+          </label>
+          <label class="d-flex flex-column">
+            تعداد تست مورد نظر:
+            <input
+              type="number"
+              min="1"
+              max="400"
+              placeholder="تعداد سوالات را وارد کنيد"
+              id="count_input"
+            />
+          </label>
+          <label class="d-flex flex-column">
+            زمان براي هر سوال:
+            <div class="d-flex">
+              <input
+                type="number"
+                min="1"
+                max="10"
+                value="1"
+                placeholder="دقیقه"
+                class="w-50 mx-1"
+                id="minute_input"
+              />
+              <input
+                type="number"
+                min="0"
+                max="59"
+                value="0"
+                placeholder="ثانیه"
+                class="w-50 mx-1"
+                id="second_input"
+              />
+            </div>
+          </label>
+        </form>
+        <button id="submit_btn">شروع</button>
+      </div>
+      <div
+        class="main_buttons p-3 d-flex justify-content-center align-items-center flex-wrap w-100"
+      >
+        <button
+          id="start_btn"
+          class="main_button p-4 m-3 m-lg-1 d-flex justify-content-between align-items-center"
+        >
+          شروع
+          <img src="res/icons/rocket.svg" alt="" />
         </button>
-        <button class="main_button p-4  m-3 m-lg-1 d-flex justify-content-between align-items-center">
-            آمار ها
-            <img src="res/icons/statistics.svg" alt="">
+        <button
+          id="stats_btn"
+          class="main_button p-4 m-3 m-lg-1 d-flex justify-content-between align-items-center"
+        >
+          آمار ها
+          <img src="res/icons/statistics.svg" alt="" />
         </button>
       </div>
       <div class="copyright">
