@@ -1,0 +1,60 @@
+.main_button  {
+    width: 90%;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    background-color: #0c4b0c;
+    padding: 9px 12px;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.exit_btn {
+    background-color: #f00;
+}
+.main_buttons {
+    position: fixed;
+    bottom: 0;
+}
+.main_content {
+    font-weight: 700;
+}
+.time_remaining {
+    font-size: 9rem;
+}
+.question_num {
+    font-size: 5rem;
+}
+.extra_time {
+    font-size: 3rem;
+    color: #f00;
+    opacity: 0;
+    transition: 0.5s;
+}
+.visible_extra_time {
+    opacity: 1;
+}
+@media only screen and (min-width:768px) {
+    .main_button {
+        width: 60%;
+    }
+}
+@media only screen and (min-width:1200px) {
+    .main_button {
+        width: 40%;
+    }
+    .time_remaining {
+        font-size: 11rem;
+    }
+    .question_num {
+        font-size: 7rem;
+    }
+    .extra_time {
+        font-size: 5rem;
+    }
+}
+@media only screen and (min-width:1400px) {
+    .main_button {
+        width: 30%;
+    }
+}
