@@ -9,6 +9,7 @@ const extraTimeElem = $.querySelector(".extra_time");
 let isStarted = false;
 let isStopped = false;
 let questionNumber = 1;
+let stats = [];
 
 let totalQuestions;
 let subjectName;
@@ -18,6 +19,8 @@ let timer;
 let extraTimer;
 let min;
 let sec;
+let extraMin;
+let extraSec;
 
 function getDataFromParameters() {
   let searchParams = new URLSearchParams(location.search);
@@ -32,6 +35,8 @@ function setQuestionData() {
   remainingTimeElem.textContent = `${minForEachQuestion}:${
     secForEachQuestion < 10 ? "0" + secForEachQuestion : secForEachQuestion
   }`;
+  stopBtn.textContent = "توقف";
+  isStopped = false;
 }
 
 function startTimer() {
@@ -72,15 +77,17 @@ function continueTimer() {
 }
 function startExtraTimer() {
   extraTimeElem.classList.add("visible_extra_time");
-  let sec = 0;
-  let min = 0;
+  extraSec = 0;
+  extraMin = 0;
   extraTimer = setInterval(() => {
-    if (sec === 59) {
-      sec = 0;
-      min++;
+    if (extraSec === 59) {
+      extraSec = 0;
+      extraMin++;
     }
-    sec++;
-    extraTimeElem.textContent = `${min}:${sec < 10 ? "0" + sec : sec}`;
+    extraSec++;
+    extraTimeElem.textContent = `${extraMin}:${
+      extraSec < 10 ? "0" + extraSec : extraSec
+    }`;
   }, 1000);
 }
 function resetTimers() {
@@ -90,13 +97,28 @@ function resetTimers() {
 }
 function goToNextQuestion() {
   if (questionNumber === totalQuestions) {
+    localStorage.setItem("stats", JSON.stringify(stats));
     location.href = "results.html";
   } else {
+    pushQuestionData();
     questionNumber++;
     resetTimers();
     setQuestionData();
     startTimer();
   }
+}
+function pushQuestionData() {
+  stats.push({
+    number: questionNumber,
+    timeTaken: {
+      min: minForEachQuestion - min,
+      sec: secForEachQuestion - sec,
+    },
+    extraTimeTaken: {
+      min: extraMin ?? 0,
+      sec: extraSec ?? 0,
+    },
+  });
 }
 function stopTimer() {
   stopBtn.textContent = "ادامه";
@@ -109,6 +131,7 @@ startBtn.addEventListener("click", () => {
     isStarted = true;
   } else {
     goToNextQuestion();
+    console.log(stats);
   }
 });
 exitBtn.addEventListener("click", () => {
