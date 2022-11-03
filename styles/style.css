@@ -1,6 +1,6 @@
 .main_button img {
-  width: 70px;
-  height: 70px;
+  width: 40px;
+  height: 40px;
 }
 .main_button {
   border: none;
@@ -9,7 +9,7 @@
   background-color: #379237;
   border-radius: 20px;
   color: #fff;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 .copyright {
@@ -94,6 +94,7 @@
     left: 7.5%;
     right: 7.5%;
   }
+
 }
 @media only screen and (min-width: 992px) {
   .main_button {
@@ -108,6 +109,13 @@
   }
   #submit_btn {
     width: 70%;
+  }
+  .main_button {
+    font-size: 3rem;
+  }
+  .main_button img {
+    width: 70px;
+    height: 70px;
   }
 }
 @media only screen and (min-width:1200px) {

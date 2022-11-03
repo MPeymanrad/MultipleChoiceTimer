@@ -12,6 +12,12 @@ let questionNumber = 1;
 let consumedMin = 0;
 let consumedSec = 0;
 let stats = [];
+let bigStats = {
+  totalQuestions: 0,
+  onTime: 0,
+  onExtraTime: 0,
+  subjects: {},
+};
 
 let totalQuestions;
 let subjectName;
@@ -21,8 +27,8 @@ let timer;
 let extraTimer;
 let min;
 let sec;
-let extraMin;
-let extraSec;
+let extraMin = 0;
+let extraSec = 0;
 
 function getDataFromParameters() {
   let searchParams = new URLSearchParams(location.search);
@@ -31,7 +37,12 @@ function getDataFromParameters() {
   minForEachQuestion = +searchParams.get("minute");
   secForEachQuestion = +searchParams.get("second");
 }
-
+function getBigStatsFromLocalStorage() {
+  let localData = JSON.parse(localStorage.getItem("bigStats"));
+  if (localData) {
+    bigStats = localData;
+  }
+}
 function setQuestionData() {
   questionNumberElem.textContent = `${questionNumber}/${totalQuestions}`;
   remainingTimeElem.textContent = `${minForEachQuestion}:${
@@ -83,8 +94,6 @@ function continueTimer() {
 }
 function startExtraTimer() {
   extraTimeElem.classList.add("visible_extra_time");
-  extraSec = 0;
-  extraMin = 0;
   extraTimer = setInterval(() => {
     if (extraSec === 59) {
       extraSec = 0;
@@ -118,6 +127,27 @@ function goToNextQuestion() {
   }
 }
 function pushQuestionData() {
+  if (!bigStats.subjects[subjectName]) {
+    bigStats.subjects[subjectName] = {
+      totalQuestions:0,
+      onTime:0,
+      onExtraTime:0,
+    }
+  }
+  bigStats.totalQuestions++;
+  bigStats.subjects[subjectName].totalQuestions++;
+  if (extraMin === 0 && extraSec === 0) {
+    bigStats.onTime++;
+    bigStats.subjects[subjectName].onTime++;
+    console.log(extraMin,extraSec);
+    console.log("C1");
+  } else {
+    bigStats.onExtraTime++;
+    bigStats.subjects[subjectName].onExtraTime++;
+    console.log(extraMin,extraSec);
+    console.log("C2");
+  }
+  localStorage.setItem("bigStats", JSON.stringify(bigStats));
   stats.push({
     number: questionNumber,
     timeTaken: {
@@ -160,4 +190,5 @@ stopBtn.addEventListener("click", () => {
 });
 
 getDataFromParameters();
+getBigStatsFromLocalStorage();
 setQuestionData();
