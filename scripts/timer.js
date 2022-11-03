@@ -64,7 +64,6 @@ function startTimer() {
       startExtraTimer();
     } else if (sec === 0) {
       min--;
-      consumedMin++;
       sec = 59;
     } else {
       sec--;
@@ -129,36 +128,36 @@ function goToNextQuestion() {
 function pushQuestionData() {
   if (!bigStats.subjects[subjectName]) {
     bigStats.subjects[subjectName] = {
-      totalQuestions:0,
-      onTime:0,
-      onExtraTime:0,
-    }
+      totalQuestions: 0,
+      onTime: 0,
+      onExtraTime: 0,
+    };
   }
   bigStats.totalQuestions++;
   bigStats.subjects[subjectName].totalQuestions++;
   if (extraMin === 0 && extraSec === 0) {
     bigStats.onTime++;
     bigStats.subjects[subjectName].onTime++;
-    console.log(extraMin,extraSec);
-    console.log("C1");
   } else {
     bigStats.onExtraTime++;
     bigStats.subjects[subjectName].onExtraTime++;
-    console.log(extraMin,extraSec);
-    console.log("C2");
   }
   localStorage.setItem("bigStats", JSON.stringify(bigStats));
-  stats.push({
+  let finalConsumedMin =
+    consumedSec / 60 >= 1 ? Math.floor(consumedSec / 60) : 0;
+  let finalConsumedSec = consumedSec - finalConsumedMin * 60;
+  let newStatObj = {
     number: questionNumber,
     timeTaken: {
-      min: consumedMin,
-      sec: consumedSec,
+      min: finalConsumedMin,
+      sec: finalConsumedSec,
     },
     extraTimeTaken: {
       min: extraMin ?? 0,
       sec: extraSec ?? 0,
     },
-  });
+  };
+  stats.push(newStatObj);
 }
 function stopTimer() {
   stopBtn.textContent = "ادامه";
