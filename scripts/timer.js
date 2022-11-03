@@ -9,6 +9,8 @@ const extraTimeElem = $.querySelector(".extra_time");
 let isStarted = false;
 let isStopped = false;
 let questionNumber = 1;
+let consumedMin = 0;
+let consumedSec = 0;
 let stats = [];
 
 let totalQuestions;
@@ -51,9 +53,11 @@ function startTimer() {
       startExtraTimer();
     } else if (sec === 0) {
       min--;
+      consumedMin++;
       sec = 59;
     } else {
       sec--;
+      consumedSec++;
     }
     remainingTimeElem.textContent = `${min}:${sec < 10 ? "0" + sec : sec}`;
   }, 1000);
@@ -68,9 +72,11 @@ function continueTimer() {
       startExtraTimer();
     } else if (sec === 0) {
       min--;
+      consumedMin++;
       sec = 59;
     } else {
       sec--;
+      consumedSec++;
     }
     remainingTimeElem.textContent = `${min}:${sec < 10 ? "0" + sec : sec}`;
   }, 1000);
@@ -92,15 +98,19 @@ function startExtraTimer() {
 }
 function resetTimers() {
   extraTimeElem.classList.remove("visible_extra_time");
+  consumedMin = 0;
+  consumedSec = 0;
   clearInterval(extraTimer);
   clearInterval(timer);
 }
 function goToNextQuestion() {
+  pushQuestionData();
   if (questionNumber === totalQuestions) {
     localStorage.setItem("stats", JSON.stringify(stats));
-    location.href = "results.html";
+    location.href = `results.html?name=${encodeURIComponent(
+      subjectName
+    )}&count=${totalQuestions}&min=${minForEachQuestion}&sec=${secForEachQuestion}`;
   } else {
-    pushQuestionData();
     questionNumber++;
     resetTimers();
     setQuestionData();
@@ -111,8 +121,8 @@ function pushQuestionData() {
   stats.push({
     number: questionNumber,
     timeTaken: {
-      min: minForEachQuestion - min,
-      sec: secForEachQuestion - sec,
+      min: consumedMin,
+      sec: consumedSec,
     },
     extraTimeTaken: {
       min: extraMin ?? 0,
