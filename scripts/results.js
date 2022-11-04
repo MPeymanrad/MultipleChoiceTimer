@@ -1,4 +1,6 @@
 const $ = document;
+const exportBtn = $.querySelector(".export_btn");
+let subjectName;
 
 function setGeneralData() {
   const subjectNameH2 = $.querySelector(".name");
@@ -6,8 +8,8 @@ function setGeneralData() {
   const questionCountH2 = $.querySelector(".question_number");
 
   const urlParameters = new URLSearchParams(location.search);
-  const subjectName = decodeURIComponent(urlParameters.get("name"));
   const questionsCount = urlParameters.get("count");
+  subjectName = decodeURIComponent(urlParameters.get("name"));
   const timeForEachQuestion = `${urlParameters.get("min")}:${urlParameters.get(
     "sec"
   )}`;
@@ -46,6 +48,32 @@ function generateDataCards() {
     );
   });
 }
-
+function exportExcel() {
+  let arrayToExport = [
+    ["شماره سوال", "زمان استفاده شده", "زمان اضافه استفاده شده"],
+  ];
+  const data = JSON.parse(localStorage.getItem("stats"));
+  let timeTaken;
+  let extraTimeTaken;
+  data.forEach((questionData) => {
+    timeTaken = `${questionData.timeTaken.min} : ${
+      questionData.timeTaken.sec < 10
+        ? "0" + questionData.timeTaken.sec
+        : questionData.timeTaken.sec
+    }`;
+    extraTimeTaken = `${questionData.extraTimeTaken.min} : ${
+      questionData.extraTimeTaken.sec < 10
+        ? "0" + questionData.extraTimeTaken.sec
+        : questionData.extraTimeTaken.sec
+    }`;
+    arrayToExport.push([questionData.number, timeTaken, extraTimeTaken]);
+  });
+  let workbook = XLSX.utils.book_new(),
+    worksheet = XLSX.utils.aoa_to_sheet(arrayToExport);
+  workbook.SheetNames.push("Sheet1");
+  workbook.Sheets["Sheet1"] = worksheet;
+  XLSX.writeFile(workbook, `TestYarExport_${subjectName}.xlsx`);
+}
 setGeneralData();
 generateDataCards();
+exportBtn.addEventListener("click", exportExcel);

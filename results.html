@@ -11,23 +11,20 @@
   </head>
   <body dir="rtl">
     <div class="wrapper">
+      <div class="export_btn" title="دانلود فایل اکسل">
+        <img src="res/icons/microsoft_excel.svg" alt="excel icon" />
+      </div>
       <div class="general_info d-flex justify-content-center p-4 flex-wrap">
         <h2 class="name"></h2>
         <h2 class="question_time"></h2>
         <h2 class="question_number"></h2>
       </div>
-      <div class="results">
-          <!-- <div class="test_result d-flex flex-column">
-                <span class="nubmer">شماره1</span>
-                <span class="time">زمان استفاده شده:5:30دقیقه</span>
-                <span class="time_remained"> دقیقه زمان باقی مانده:00:30</span>
-                <span class="extra_time">زمان اضافه:1:10دقیقه</span>
-            </div> -->
-      </div>
+      <div class="results"></div>
       <a href="index.html">
         <button class="return_home">بازگشت به خانه</button>
       </a>
     </div>
     <script src="scripts/results.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   </body>
 </html>

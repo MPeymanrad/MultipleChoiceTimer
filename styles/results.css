@@ -44,6 +44,20 @@ a {
     font-size: 1.2rem;
     background-color: #379237;
 }
+.export_btn img {
+    width: 40px;
+    height: 40px;
+}
+.export_btn {
+    background-color: #379237;
+    border-radius: 40px;
+    color: #fff;
+    position: fixed;
+    right: 1%;
+    top: 1%;
+    padding: 0.5rem;
+    cursor: pointer;
+}
 @media only screen and (min-width:576px) {
     .results {
         height: 70vh;
