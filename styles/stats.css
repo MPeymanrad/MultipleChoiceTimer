@@ -12,3 +12,17 @@ h2 {
     font-weight: 700;
     font-style: italic;
 }
+.filter_btn {
+    border:1px solid #006400;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    transition: 0.3s;
+    margin:10px;
+}
+.active_filter {
+    background-color: #006400;
+    color: #fff;
+}

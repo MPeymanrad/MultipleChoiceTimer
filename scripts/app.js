@@ -40,7 +40,7 @@ function goToTimerPage() {
             "timer.html",
             "file:///C:/Users/ASRAR_COMPUTER/Desktop/برنامه%20نویسی.مدرسه.کانون%20زبان/programmig%20and%20P_Videos/Projects/Web/Test%20Helper%20App/"
           );
-          timerUrl.searchParams.append("name", subjectNameInput.value);
+          timerUrl.searchParams.append("name", subjectNameInput.value.trim());
           timerUrl.searchParams.append("count", questionCountInput.value);
           timerUrl.searchParams.append("minute", minuteInput.value);
           timerUrl.searchParams.append("second", secondInput.value);
