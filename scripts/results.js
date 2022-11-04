@@ -28,6 +28,10 @@ function generateDataCards() {
       شماره سوال:
       <span>${stat.number}</span>
         </label>
+        <label>
+          حل شده: 
+          <span>${stat.isSolved ? "بله" : "خیر"}</span>
+        </label>
           <label>
  زمان استفاده شده:
         <span>${
@@ -50,7 +54,7 @@ function generateDataCards() {
 }
 function exportExcel() {
   let arrayToExport = [
-    ["شماره سوال", "زمان استفاده شده", "زمان اضافه استفاده شده"],
+    ["شماره سوال", "حل شده", "زمان استفاده شده", "زمان اضافه استفاده شده"],
   ];
   const data = JSON.parse(localStorage.getItem("stats"));
   let timeTaken;
@@ -66,7 +70,12 @@ function exportExcel() {
         ? "0" + questionData.extraTimeTaken.sec
         : questionData.extraTimeTaken.sec
     }`;
-    arrayToExport.push([questionData.number, timeTaken, extraTimeTaken]);
+    arrayToExport.push([
+      questionData.number,
+      questionData.isSolved ? "بله" : "خیر",
+      timeTaken,
+      extraTimeTaken,
+    ]);
   });
   let workbook = XLSX.utils.book_new(),
     worksheet = XLSX.utils.aoa_to_sheet(arrayToExport);

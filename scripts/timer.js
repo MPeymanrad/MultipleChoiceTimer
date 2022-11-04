@@ -2,6 +2,7 @@ const $ = document;
 const startBtn = $.querySelector(".start_btn");
 const stopBtn = $.querySelector(".stop_btn");
 const exitBtn = $.querySelector(".exit_btn");
+const skipBtn = $.querySelector(".skip_btn");
 const questionNumberElem = $.querySelector(".question_num");
 const remainingTimeElem = $.querySelector(".time_remaining");
 const extraTimeElem = $.querySelector(".extra_time");
@@ -16,6 +17,7 @@ let bigStats = {
   totalQuestions: 0,
   onTime: 0,
   onExtraTime: 0,
+  numberOfSolvedQuestions: 0,
   subjects: {},
 };
 
@@ -111,8 +113,8 @@ function resetTimers() {
   clearInterval(extraTimer);
   clearInterval(timer);
 }
-function goToNextQuestion() {
-  pushQuestionData();
+function goToNextQuestion(isSolved) {
+  pushQuestionData(isSolved);
   if (questionNumber === totalQuestions) {
     localStorage.setItem("stats", JSON.stringify(stats));
     location.href = `results.html?name=${encodeURIComponent(
@@ -125,12 +127,13 @@ function goToNextQuestion() {
     startTimer();
   }
 }
-function pushQuestionData() {
+function pushQuestionData(isSolved) {
   if (!bigStats.subjects[subjectName]) {
     bigStats.subjects[subjectName] = {
       totalQuestions: 0,
       onTime: 0,
       onExtraTime: 0,
+      numberOfSolvedQuestions: 0,
     };
   }
   bigStats.totalQuestions++;
@@ -141,6 +144,12 @@ function pushQuestionData() {
   } else {
     bigStats.onExtraTime++;
     bigStats.subjects[subjectName].onExtraTime++;
+    bigStats.onExtraTime++;
+    bigStats.subjects[subjectName].onExtraTime++;
+  }
+  if (isSolved) {
+    bigStats.numberOfSolvedQuestions++;
+    bigStats.subjects[subjectName].numberOfSolvedQuestions++;
   }
   localStorage.setItem("bigStats", JSON.stringify(bigStats));
   let finalConsumedMin =
@@ -148,6 +157,7 @@ function pushQuestionData() {
   let finalConsumedSec = consumedSec - finalConsumedMin * 60;
   let newStatObj = {
     number: questionNumber,
+    isSolved: isSolved,
     timeTaken: {
       min: finalConsumedMin,
       sec: finalConsumedSec,
@@ -169,7 +179,7 @@ startBtn.addEventListener("click", () => {
     startTimer();
     isStarted = true;
   } else {
-    goToNextQuestion();
+    goToNextQuestion(true);
     console.log(stats);
   }
 });
@@ -187,6 +197,7 @@ stopBtn.addEventListener("click", () => {
     isStopped = false;
   }
 });
+skipBtn.addEventListener("click", () => goToNextQuestion(false));
 
 getDataFromParameters();
 getBigStatsFromLocalStorage();
