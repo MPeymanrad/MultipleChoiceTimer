@@ -37,15 +37,11 @@ function goToTimerPage() {
         if (!secondInput.value) {
           alert("ثانیه برای هر سوال رو وارد نکردی");
         } else {
-          let timerUrl = new URL(
-            "timer.html",
-            "file:///C:/Users/ASRAR_COMPUTER/Desktop/برنامه%20نویسی.مدرسه.کانون%20زبان/programmig%20and%20P_Videos/Projects/Web/Test%20Helper%20App/"
-          );
-          timerUrl.searchParams.append("name", subjectNameInput.value.trim());
-          timerUrl.searchParams.append("count", questionCountInput.value);
-          timerUrl.searchParams.append("minute", minuteInput.value);
-          timerUrl.searchParams.append("second", secondInput.value);
-          location.href = timerUrl.href;
+          location.href = `timer.html?name=${encodeURIComponent(
+            subjectNameInput.value.trim()
+          )}&count=${questionCountInput.value}&minute=${
+            minuteInput.value
+          }&second=${secondInput.value}`;
           clearInputs();
         }
       }
@@ -63,6 +59,6 @@ function clearInputs() {
   secondInput.value = "0";
 }
 startBtn.addEventListener("click", showModal);
-statsBtn.addEventListener("click",() => location.href = "stats.html")
-aboutBtn.addEventListener("click",() => location.href = "about.html")
+statsBtn.addEventListener("click", () => (location.href = "stats.html"));
+aboutBtn.addEventListener("click", () => (location.href = "about.html"));
 goToTimerPageBtn.addEventListener("click", goToTimerPage);
