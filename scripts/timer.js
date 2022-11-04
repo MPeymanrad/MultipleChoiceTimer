@@ -110,6 +110,8 @@ function resetTimers() {
   extraTimeElem.classList.remove("visible_extra_time");
   consumedMin = 0;
   consumedSec = 0;
+  extraMin = 0;
+  extraSec = 0;
   clearInterval(extraTimer);
   clearInterval(timer);
 }
