@@ -62,4 +62,5 @@ function clearInputs() {
   secondInput.value = "0";
 }
 startBtn.addEventListener("click", showModal);
+statsBtn.addEventListener("click",() => location.href = "stats.html")
 goToTimerPageBtn.addEventListener("click", goToTimerPage);

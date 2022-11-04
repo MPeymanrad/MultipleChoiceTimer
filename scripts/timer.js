@@ -136,21 +136,22 @@ function pushQuestionData(isSolved) {
       numberOfSolvedQuestions: 0,
     };
   }
-  bigStats.totalQuestions++;
-  bigStats.subjects[subjectName].totalQuestions++;
-  if (extraMin === 0 && extraSec === 0) {
-    bigStats.onTime++;
-    bigStats.subjects[subjectName].onTime++;
-  } else {
-    bigStats.onExtraTime++;
-    bigStats.subjects[subjectName].onExtraTime++;
-    bigStats.onExtraTime++;
-    bigStats.subjects[subjectName].onExtraTime++;
-  }
   if (isSolved) {
     bigStats.numberOfSolvedQuestions++;
     bigStats.subjects[subjectName].numberOfSolvedQuestions++;
+    if (extraMin === 0 && extraSec === 0) {
+      bigStats.onTime++;
+      bigStats.subjects[subjectName].onTime++;
+    } else {
+      bigStats.onExtraTime++;
+      bigStats.subjects[subjectName].onExtraTime++;
+      bigStats.onExtraTime++;
+      bigStats.subjects[subjectName].onExtraTime++;
+    }
   }
+  bigStats.totalQuestions++;
+  bigStats.subjects[subjectName].totalQuestions++;
+
   localStorage.setItem("bigStats", JSON.stringify(bigStats));
   let finalConsumedMin =
     consumedSec / 60 >= 1 ? Math.floor(consumedSec / 60) : 0;
