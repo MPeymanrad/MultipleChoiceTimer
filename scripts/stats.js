@@ -15,7 +15,6 @@ function checkForDataExistence() {
     location.href = "index.html";
   }
 }
-
 function generateGeneralStats() {
   const generalTimeCanvas = $.getElementById("time_overview");
   const generalKnowledgeCanvas = $.getElementById("knowledge_overview");

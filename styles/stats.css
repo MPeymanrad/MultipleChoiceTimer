@@ -26,3 +26,14 @@ h2 {
     background-color: #006400;
     color: #fff;
 }
+.sub_section {
+    width: 100%;
+}
+@media only screen and (min-width:768px) {
+    .sub_section {
+        width: 50%;
+    }
+    .section {
+        padding: 1rem;
+    }
+}
