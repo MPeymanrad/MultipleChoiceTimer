@@ -7,6 +7,7 @@ h2 {
 .section {
     width: 95%;
     padding: 0.5rem;
+    direction: rtl;
 }
 .sub_title {
     font-weight: 700;

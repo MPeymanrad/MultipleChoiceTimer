@@ -69,7 +69,9 @@ function generateFilterBtns() {
     filterBtn.classList.add("filter_btn");
     filterBtn.dataset.filterName = key;
     filterBtn.textContent = key;
-    filterBtn.addEventListener("click", (e) => generateDetailedStats(value,e.target));
+    filterBtn.addEventListener("click", (e) =>
+      generateDetailedStats(value, e.target)
+    );
     fragment.append(filterBtn);
   }
   filtersContainer.append(fragment);
@@ -78,8 +80,10 @@ function generateFilterBtns() {
     filtersContainer.firstElementChild
   );
 }
-function generateDetailedStats(subjectData,targetFilterBtn) {
-  $.querySelectorAll(".filter_btn").forEach(btn => btn.classList.remove("active_filter"))
+function generateDetailedStats(subjectData, targetFilterBtn) {
+  $.querySelectorAll(".filter_btn").forEach((btn) =>
+    btn.classList.remove("active_filter")
+  );
   targetFilterBtn.classList.add("active_filter");
   const detailedTimeCanvas = $.getElementById("time_detailed");
   const detailedKnowledgeCanvas = $.getElementById("knowledge_detailed");
@@ -129,6 +133,63 @@ function generateDetailedStats(subjectData,targetFilterBtn) {
     knowledgeConfig
   );
 }
+function generateComparisonStats() {
+  const timeComparisonCanvas = $.getElementById("time_comparison");
+  const knowledgeComparisonCanvas = $.getElementById("knowledge_comparison");
+  const timeData = {
+    labels: [],
+    datasets: [
+      {
+        label: "تعداد سوال حل شده سروقت",
+        data: [],
+        backgroundColor: ["#E0144C"],
+      },
+    ],
+  };
+  const knowledgeData = {
+    labels: [],
+    datasets: [
+      {
+        label: "تعداد سوال حل شده",
+        data: [],
+        backgroundColor: ["#E0144C"],
+      },
+    ],
+  };
+  const timeConfig = {
+    type: "bar",
+    data: timeData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+  const knowledgeConfig = {
+    type: "bar",
+    data: knowledgeData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+  for (const [key, value] of Object.entries(bigStats.subjects)) {
+    timeData.labels.push(key);
+    timeData.datasets[0].data.push(value.onTime);
+    knowledgeData.labels.push(key);
+    knowledgeData.datasets[0].data.push(value.numberOfSolvedQuestions);
+  }
+  const comparisonTimeStatsChart = new Chart(timeComparisonCanvas, timeConfig);
+  const comparisonKnowledgeStatsChart = new Chart(
+    knowledgeComparisonCanvas,
+    knowledgeConfig
+  );
+}
 function setChartSettings() {
   Chart.defaults.font.family = "Dastnevis,sans-serif";
   Chart.defaults.font.weight = "700";
@@ -139,3 +200,4 @@ getStatsFromStorage();
 checkForDataExistence();
 generateGeneralStats();
 generateFilterBtns();
+generateComparisonStats();
