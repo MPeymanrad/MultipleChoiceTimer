@@ -1,6 +1,7 @@
 const $ = document;
 const startBtn = $.getElementById("start_btn");
 const statsBtn = $.getElementById("stats_btn");
+const aboutBtn = $.getElementById("about_btn");
 const goToTimerPageBtn = $.getElementById("submit_btn");
 
 function showModal() {
@@ -63,4 +64,5 @@ function clearInputs() {
 }
 startBtn.addEventListener("click", showModal);
 statsBtn.addEventListener("click",() => location.href = "stats.html")
+aboutBtn.addEventListener("click",() => location.href = "about.html")
 goToTimerPageBtn.addEventListener("click", goToTimerPage);
