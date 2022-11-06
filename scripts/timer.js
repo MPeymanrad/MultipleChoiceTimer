@@ -21,7 +21,6 @@ let bigStats = {
   subjects: {},
 };
 
-let screenLock;
 let totalQuestions;
 let subjectName;
 let minForEachQuestion;
@@ -178,21 +177,12 @@ function stopTimer() {
   clearInterval(timer);
   clearInterval(extraTimer);
 }
-async function keepScreenAwake() {
-  if ("wakeLock" in navigator) {
-    try {
-      screenLock = await navigator.wakeLock.request("screen");
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+function keepScreenAwake() {
+  setTimeout(() => {
+    $.querySelector(".wrapper").style.background =
+      "linear-gradient(to bottom right, #f0ff42, #82cd47 90%)";
+  }, 10000);
 }
-document.addEventListener('visibilitychange', async () => {
-  if (screenLock !== null && document.visibilityState === 'visible') {
-    keepScreenAwake()
-  }
-});
 startBtn.addEventListener("click", () => {
   if (!isStarted) {
     startTimer();
